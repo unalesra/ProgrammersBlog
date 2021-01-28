@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using ProgrammersBlog.Data.Concreate.EntityFramework.Mappings;
 using ProgrammersBlog.Entities.Concreate;
 using System;
 using System.Collections.Generic;
@@ -22,5 +23,14 @@ namespace ProgrammersBlog.Data.Concreate.EntityFramework.Contexts
                 @"Server = DESKTOP - P4AJEMG\\SQLEXPRESS;Database=ProgrammersBlog;Trusted_Connection=True;Connect Timeout=30;MultipleActiveResultSets=True");
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.ApplyConfiguration(new ArticleMap());
+            modelBuilder.ApplyConfiguration(new CategoryMap());
+            modelBuilder.ApplyConfiguration(new CommentMap());
+            modelBuilder.ApplyConfiguration(new RoleMap());
+            modelBuilder.ApplyConfiguration(new UserMap());
+
+        }
     }
 }

@@ -9,7 +9,7 @@ namespace ProgrammersBlog.Shared.Entities.Abstract
     public abstract class EntityBase
     {
         //veritabanında ortak bulunmasını istediğimiz kısımları burada topladık.
-
+        public virtual int Id { get; set; }
         public virtual DateTime CreatedDate { get; set; } = DateTime.Now;
 
         public virtual DateTime ModifiedDate { get; set; } = DateTime.Now;
