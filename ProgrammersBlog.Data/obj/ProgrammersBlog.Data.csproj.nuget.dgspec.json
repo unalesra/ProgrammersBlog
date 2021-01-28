@@ -1,0 +1,212 @@
+{
+  "format": 1,
+  "restore": {
+    "E:\\VisualStudioProjects\\C#\\Web\\ProgrammersBlog\\ProgrammersBlog.Data\\ProgrammersBlog.Data.csproj": {}
+  },
+  "projects": {
+    "E:\\VisualStudioProjects\\C#\\Web\\ProgrammersBlog\\ProgrammersBlog.Data\\ProgrammersBlog.Data.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "E:\\VisualStudioProjects\\C#\\Web\\ProgrammersBlog\\ProgrammersBlog.Data\\ProgrammersBlog.Data.csproj",
+        "projectName": "ProgrammersBlog.Data",
+        "projectPath": "E:\\VisualStudioProjects\\C#\\Web\\ProgrammersBlog\\ProgrammersBlog.Data\\ProgrammersBlog.Data.csproj",
+        "packagesPath": "C:\\Users\\Nokta Bilgisayar\\.nuget\\packages\\",
+        "outputPath": "E:\\VisualStudioProjects\\C#\\Web\\ProgrammersBlog\\ProgrammersBlog.Data\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Nokta Bilgisayar\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net5.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net5.0": {
+            "targetAlias": "net5.0",
+            "projectReferences": {
+              "E:\\VisualStudioProjects\\C#\\Web\\ProgrammersBlog\\ProgrammersBlog.Entities\\ProgrammersBlog.Entities.csproj": {
+                "projectPath": "E:\\VisualStudioProjects\\C#\\Web\\ProgrammersBlog\\ProgrammersBlog.Entities\\ProgrammersBlog.Entities.csproj"
+              },
+              "E:\\VisualStudioProjects\\C#\\Web\\ProgrammersBlog\\ProgrammersBlog.Shared\\ProgrammersBlog.Shared.csproj": {
+                "projectPath": "E:\\VisualStudioProjects\\C#\\Web\\ProgrammersBlog\\ProgrammersBlog.Shared\\ProgrammersBlog.Shared.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net5.0": {
+          "targetAlias": "net5.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[5.0.2, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[5.0.2, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[5.0.2, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.102\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "E:\\VisualStudioProjects\\C#\\Web\\ProgrammersBlog\\ProgrammersBlog.Entities\\ProgrammersBlog.Entities.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "E:\\VisualStudioProjects\\C#\\Web\\ProgrammersBlog\\ProgrammersBlog.Entities\\ProgrammersBlog.Entities.csproj",
+        "projectName": "ProgrammersBlog.Entities",
+        "projectPath": "E:\\VisualStudioProjects\\C#\\Web\\ProgrammersBlog\\ProgrammersBlog.Entities\\ProgrammersBlog.Entities.csproj",
+        "packagesPath": "C:\\Users\\Nokta Bilgisayar\\.nuget\\packages\\",
+        "outputPath": "E:\\VisualStudioProjects\\C#\\Web\\ProgrammersBlog\\ProgrammersBlog.Entities\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Nokta Bilgisayar\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net5.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net5.0": {
+            "targetAlias": "net5.0",
+            "projectReferences": {
+              "E:\\VisualStudioProjects\\C#\\Web\\ProgrammersBlog\\ProgrammersBlog.Shared\\ProgrammersBlog.Shared.csproj": {
+                "projectPath": "E:\\VisualStudioProjects\\C#\\Web\\ProgrammersBlog\\ProgrammersBlog.Shared\\ProgrammersBlog.Shared.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net5.0": {
+          "targetAlias": "net5.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.102\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "E:\\VisualStudioProjects\\C#\\Web\\ProgrammersBlog\\ProgrammersBlog.Shared\\ProgrammersBlog.Shared.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "E:\\VisualStudioProjects\\C#\\Web\\ProgrammersBlog\\ProgrammersBlog.Shared\\ProgrammersBlog.Shared.csproj",
+        "projectName": "ProgrammersBlog.Shared",
+        "projectPath": "E:\\VisualStudioProjects\\C#\\Web\\ProgrammersBlog\\ProgrammersBlog.Shared\\ProgrammersBlog.Shared.csproj",
+        "packagesPath": "C:\\Users\\Nokta Bilgisayar\\.nuget\\packages\\",
+        "outputPath": "E:\\VisualStudioProjects\\C#\\Web\\ProgrammersBlog\\ProgrammersBlog.Shared\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Nokta Bilgisayar\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net5.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net5.0": {
+            "targetAlias": "net5.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net5.0": {
+          "targetAlias": "net5.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[5.0.2, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.102\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
