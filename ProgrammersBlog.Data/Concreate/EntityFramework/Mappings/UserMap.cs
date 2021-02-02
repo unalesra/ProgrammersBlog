@@ -40,6 +40,28 @@ namespace ProgrammersBlog.Data.Concreate.EntityFramework.Mappings
             builder.Property(u => u.IsDeleted).IsRequired();
             builder.Property(u => u.Note).HasMaxLength(500);
             builder.ToTable("Users");
+
+            builder.HasData(new User
+            {
+                Id = 1,
+                RoleId = 1,
+                FirstName = "Alper",
+                LastName = "Tunga",
+                UserName = "alpertunga",
+                Email = "alper@altu.dev",
+                PasswordHash = Encoding.ASCII.GetBytes("0192023a7bbd73250516f069df18b500"),
+                Picture= "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSX4wVGjMQ37PaO4PdUVEAliSLi8-c2gJ1zvQ&usqp=CAU",
+
+                Description = "İlk admin kullanıcı",
+                IsActive = true,
+                IsDeleted = false,
+                CreatedByName = "InitialCreate", //bunu veritabanu oluşturdu anlamında koyuluyor
+                CreatedDate = DateTime.Now,
+                ModifiedByName = "InitialCreate",
+                ModifiedDate = DateTime.Now,
+                Note = "Admin Kullanıcısı"
+
+            }); 
         }
     }
 }

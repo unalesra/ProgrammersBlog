@@ -29,6 +29,22 @@ namespace ProgrammersBlog.Data.Concreate.EntityFramework.Mappings
             builder.Property(r => r.IsDeleted).IsRequired();
             builder.Property(r => r.Note).HasMaxLength(500);
             builder.ToTable("Roles");
+
+            //bu data var mı
+            builder.HasData(new Role
+            {
+                Id=1,
+                Name="Admin",
+                Description="Admin tüm haklara sahiptir",
+                IsActive=true,
+                IsDeleted=false,
+                CreatedByName="InitialCreate" , //bunu veritabanu oluşturdu anlamında koyuluyor
+                CreatedDate=DateTime.Now,
+                ModifiedByName="Initial Create",
+                ModifiedDate=DateTime.Now,
+                Note="Admin Rolüdür"
+
+            });
         }
     }
 }

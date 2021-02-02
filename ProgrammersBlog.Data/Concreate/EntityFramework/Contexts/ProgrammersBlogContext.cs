@@ -20,7 +20,7 @@ namespace ProgrammersBlog.Data.Concreate.EntityFramework.Contexts
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(
-                @"Server = DESKTOP - P4AJEMG\\SQLEXPRESS;Database=ProgrammersBlog;Trusted_Connection=True;Connect Timeout=30;MultipleActiveResultSets=True");
+                @"Server = DESKTOP-P4AJEMG\SQLEXPRESS;Database=ProgrammersBlog;Trusted_Connection=True;Connect Timeout=30;MultipleActiveResultSets=True");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -11,6 +11,7 @@
           "Microsoft.EntityFrameworkCore": "5.0.2",
           "Microsoft.EntityFrameworkCore.Design": "5.0.2",
           "Microsoft.EntityFrameworkCore.SqlServer": "5.0.2",
+          "Microsoft.EntityFrameworkCore.Tools": "5.0.2",
           "ProgrammersBlog.Entities": "1.0.0",
           "ProgrammersBlog.Shared": "1.0.0"
         },
@@ -167,6 +168,11 @@
             "assemblyVersion": "5.0.2.0",
             "fileVersion": "5.0.220.61114"
           }
+        }
+      },
+      "Microsoft.EntityFrameworkCore.Tools/5.0.2": {
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore.Design": "5.0.2"
         }
       },
       "Microsoft.Extensions.Caching.Abstractions/5.0.0": {
@@ -1157,6 +1163,13 @@
       "sha512": "sha512-4s2Ydo9/TEj2qD4KceFrhnUZvavNsPHd2cNE47cu5lvGZzFY9GlxR2a6GnlB0maEDVGJdhJ4Pu0giXmvSGKlwA==",
       "path": "microsoft.entityframeworkcore.sqlserver/5.0.2",
       "hashPath": "microsoft.entityframeworkcore.sqlserver.5.0.2.nupkg.sha512"
+    },
+    "Microsoft.EntityFrameworkCore.Tools/5.0.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-eJf7HbWRS6w7wJiOyjpkbkO1fTThElNzOru1d3+yWBLoEGv5v5eSN9aPXmHcXfyR9Uzx3fmjNIuMcyppDq5o/A==",
+      "path": "microsoft.entityframeworkcore.tools/5.0.2",
+      "hashPath": "microsoft.entityframeworkcore.tools.5.0.2.nupkg.sha512"
     },
     "Microsoft.Extensions.Caching.Abstractions/5.0.0": {
       "type": "package",

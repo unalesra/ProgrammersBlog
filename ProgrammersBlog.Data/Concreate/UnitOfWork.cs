@@ -24,7 +24,7 @@ namespace ProgrammersBlog.Data.Concreate
             _context = context;
         }
 
-        public async ValueTask IAsyncDisposable()
+        public async ValueTask DisposeAsync()
         {
             await _context.DisposeAsync();
         }
@@ -47,5 +47,7 @@ namespace ProgrammersBlog.Data.Concreate
             //burada int dememe gerek yok savechanges dediğimde zaten int değeriyle beraber döndürüyor
             return await _context.SaveChangesAsync();
         }
+
+
     }
 }

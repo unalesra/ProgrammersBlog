@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "ZAurzwbNO1sl8FPLCytq1IBoBNvDqUi8W2w6mnJJ5A7xQyHqDQ+bhQSn4b8oYPrWIzbxmeBn1RuGrYEN3iX8cA==",
+  "dgSpecHash": "5AdgPl0Bapg0r2fo+3umfE+W+2Hq2mDLAyBnznzOmEbn5XCqh9QhPo++pq47De71muB5ODqNaW3F68Uhb0CDjw==",
   "success": true,
   "projectFilePath": "E:\\VisualStudioProjects\\C#\\Web\\ProgrammersBlog\\ProgrammersBlog.Data\\ProgrammersBlog.Data.csproj",
   "expectedPackageFiles": [
@@ -14,6 +14,7 @@
     "C:\\Users\\Nokta Bilgisayar\\.nuget\\packages\\microsoft.entityframeworkcore.design\\5.0.2\\microsoft.entityframeworkcore.design.5.0.2.nupkg.sha512",
     "C:\\Users\\Nokta Bilgisayar\\.nuget\\packages\\microsoft.entityframeworkcore.relational\\5.0.2\\microsoft.entityframeworkcore.relational.5.0.2.nupkg.sha512",
     "C:\\Users\\Nokta Bilgisayar\\.nuget\\packages\\microsoft.entityframeworkcore.sqlserver\\5.0.2\\microsoft.entityframeworkcore.sqlserver.5.0.2.nupkg.sha512",
+    "C:\\Users\\Nokta Bilgisayar\\.nuget\\packages\\microsoft.entityframeworkcore.tools\\5.0.2\\microsoft.entityframeworkcore.tools.5.0.2.nupkg.sha512",
     "C:\\Users\\Nokta Bilgisayar\\.nuget\\packages\\microsoft.extensions.caching.abstractions\\5.0.0\\microsoft.extensions.caching.abstractions.5.0.0.nupkg.sha512",
     "C:\\Users\\Nokta Bilgisayar\\.nuget\\packages\\microsoft.extensions.caching.memory\\5.0.0\\microsoft.extensions.caching.memory.5.0.0.nupkg.sha512",
     "C:\\Users\\Nokta Bilgisayar\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\5.0.0\\microsoft.extensions.configuration.abstractions.5.0.0.nupkg.sha512",
