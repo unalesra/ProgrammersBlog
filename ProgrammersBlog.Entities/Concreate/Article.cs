@@ -14,8 +14,8 @@ namespace ProgrammersBlog.Entities.Concreate
         public string Content { get; set; }
         public string Tumbnail { get; set; }
         public DateTime Date { get; set; }
-        public int ViewsCount { get; set; }
-        public int CommentCount { get; set; }
+        public int ViewsCount { get; set; } = 0;
+        public int CommentCount { get; set; } = 0;
         public string SeoAuthor { get; set; }
         public string SeoDescription { get; set; }
         public string SeoTags { get; set; }
