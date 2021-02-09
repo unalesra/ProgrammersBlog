@@ -35,7 +35,7 @@ namespace ProgrammersBlog.Mvc
             {
                 app.UseDeveloperExceptionPage();
 
-                //bulunamayan bir sayfaya gittiðinde 404 hatasý ver
+                //BULUNAMAYAN BÝR SAYFAYA GÝTTÝÐÝNDE 404 HATASI VER
                 app.UseStatusCodePages();
             }
 
