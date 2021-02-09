@@ -10,3 +10,10 @@ E:\VisualStudioProjects\C#\Web\ProgrammersBlog\ProgrammersBlog.Services\obj\Debu
 E:\VisualStudioProjects\C#\Web\ProgrammersBlog\ProgrammersBlog.Services\obj\Debug\net5.0\ProgrammersBlog.Services.dll
 E:\VisualStudioProjects\C#\Web\ProgrammersBlog\ProgrammersBlog.Services\obj\Debug\net5.0\ref\ProgrammersBlog.Services.dll
 E:\VisualStudioProjects\C#\Web\ProgrammersBlog\ProgrammersBlog.Services\obj\Debug\net5.0\ProgrammersBlog.Services.pdb
+E:\VisualStudioProjects\C#\Web\ProgrammersBlog\ProgrammersBlog.Services\bin\Debug\net5.0\ProgrammersBlog.Data.dll
+E:\VisualStudioProjects\C#\Web\ProgrammersBlog\ProgrammersBlog.Services\bin\Debug\net5.0\ProgrammersBlog.Entities.dll
+E:\VisualStudioProjects\C#\Web\ProgrammersBlog\ProgrammersBlog.Services\bin\Debug\net5.0\ProgrammersBlog.Shared.dll
+E:\VisualStudioProjects\C#\Web\ProgrammersBlog\ProgrammersBlog.Services\bin\Debug\net5.0\ProgrammersBlog.Data.pdb
+E:\VisualStudioProjects\C#\Web\ProgrammersBlog\ProgrammersBlog.Services\bin\Debug\net5.0\ProgrammersBlog.Entities.pdb
+E:\VisualStudioProjects\C#\Web\ProgrammersBlog\ProgrammersBlog.Services\bin\Debug\net5.0\ProgrammersBlog.Shared.pdb
+E:\VisualStudioProjects\C#\Web\ProgrammersBlog\ProgrammersBlog.Services\obj\Debug\net5.0\ProgrammersBlog.Services.csproj.CopyComplete

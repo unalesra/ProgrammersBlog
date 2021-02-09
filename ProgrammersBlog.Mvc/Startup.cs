@@ -17,6 +17,13 @@ namespace ProgrammersBlog.Mvc
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            //bir mvc katmaný olduðunu gösterdik.
+            //her önyüz deðiþikliðinde önyüzü derlemek zorunda kalmamak için addrazorruntimecompiilation ekledik.
+            services.AddControllersWithViews().AddRazorRuntimeCompilation();
+
+            //derlenme esnasýnda automapper'in burada olan sýnýflarý taramasýný saðlýyoruz.
+            services.AddAutoMapper(typeof(Startup));
+
             //servis katmaný ile mvc katmaný arasýnaki baðlantý
             services.LoadMyService();
         }
@@ -27,16 +34,28 @@ namespace ProgrammersBlog.Mvc
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+
+                //bulunamayan bir sayfaya gittiðinde 404 hatasý ver
+                app.UseStatusCodePages();
             }
+
+            //static dosyalarý kullan
+            app.UseStaticFiles();
+
 
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapGet("/", async context =>
-                {
-                    await context.Response.WriteAsync("Hello World!");
-                });
+                //admin için route
+                endpoints.MapAreaControllerRoute(
+                    name: "Admin",
+                    areaName: "Admin",
+                    pattern: "Admin/{Controller=Home}/{action=Index}/{id?}"
+                    );
+
+
+                endpoints.MapDefaultControllerRoute();
             });
         }
     }
