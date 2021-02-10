@@ -20,9 +20,11 @@ namespace ProgrammersBlog.Mvc.Controllers
         public async Task<IActionResult> Index()
         {
             var result = await _categoryService.GetAll();
-            if (result.ResultStatus == ResultStatus.Success)
-                return View(result.Data);
-            return View();
+
+
+            //category manager içinde error alırsam da succes alırsam da data gönderdiğimde hata vermiycek şekilde ayarladığım için direkt data gönderebilirim.
+            return View(result.Data);
+
         }
 
 
