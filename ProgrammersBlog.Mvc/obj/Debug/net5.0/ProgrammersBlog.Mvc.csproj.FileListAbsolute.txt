@@ -397,3 +397,4 @@ E:\VisualStudioProjects\C#\Web\ProgrammersBlog\ProgrammersBlog.Mvc\obj\Debug\net
 E:\VisualStudioProjects\C#\Web\ProgrammersBlog\ProgrammersBlog.Mvc\obj\Debug\net5.0\Razor\Areas\Admin\Views\Shared\_LayoutCssPartial.cshtml.g.cs
 E:\VisualStudioProjects\C#\Web\ProgrammersBlog\ProgrammersBlog.Mvc\obj\Debug\net5.0\Razor\Areas\Admin\Views\Shared\_LayoutJsPartial.cshtml.g.cs
 E:\VisualStudioProjects\C#\Web\ProgrammersBlog\ProgrammersBlog.Mvc\obj\Debug\net5.0\Razor\Areas\Admin\Views\Shared\_LayoutSideBarNavPartial.cshtml.g.cs
+E:\VisualStudioProjects\C#\Web\ProgrammersBlog\ProgrammersBlog.Mvc\obj\Debug\net5.0\Razor\Areas\Admin\Views\Category\Index.cshtml.g.cs
