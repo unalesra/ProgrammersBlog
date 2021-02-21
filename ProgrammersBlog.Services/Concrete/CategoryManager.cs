@@ -25,7 +25,7 @@ namespace ProgrammersBlog.Services.Concrete
             _mapper = mapper;
         }
 
-        public async Task<IResult> Add(CategoryAddDto categoryAddDto, string cretaedByName)
+        public async Task<IDataResult<CategoryDto>> Add(CategoryAddDto categoryAddDto, string cretaedByName)
         {
             
             var category = _mapper.Map<Category>(categoryAddDto);
@@ -40,10 +40,14 @@ namespace ProgrammersBlog.Services.Concrete
             //eğer yarı senkron yarı asenkron bir yapıda çalışıyor olsaydım bu bir sorun olmazdı, kimileri beklerken kimileri beklemezdi.
             //ama burada tamamen asenkron bir yapı var dolayısıyla aşağıdaki gibi kullamamız gerekir
 
-            await _unitOfWork.Categories.AddAsync(category);
+            var addedCategory= await _unitOfWork.Categories.AddAsync(category);
             await _unitOfWork.SaveAsync();
 
-            return new Result(ResultStatus.Success, $"{categoryAddDto.Name} adlı kategori başarıyla işlenmiştir.");
+            return new DataResult<CategoryDto>(ResultStatus.Success, $"{categoryAddDto.Name} adlı kategori başarıyla işlenmiştir.", new CategoryDto { 
+                Category=addedCategory,
+                ResultStatus=ResultStatus.Success,
+                Message= $"{categoryAddDto.Name} adlı kategori başarıyla işlenmiştir."
+            });
         }
 
         public async Task<IResult> Delete(int categoryId, string modifiedByName)
@@ -76,7 +80,11 @@ namespace ProgrammersBlog.Services.Concrete
                 }) ;
                
             }
-            return new DataResult<CategoryDto>(ResultStatus.Error, "Böyle bir kategori bulunamadı", null);
+            return new DataResult<CategoryDto>(ResultStatus.Error, "Böyle bir kategori bulunamadı", new CategoryDto {
+                Category = null,
+                ResultStatus = ResultStatus.Error,
+                Message = "Böyle bir kategori bulunamadı"
+            });
         }
 
         public async Task<IDataResult<CategoryListDto>> GetAll()
@@ -123,13 +131,17 @@ namespace ProgrammersBlog.Services.Concrete
             return new Result(ResultStatus.Error, $"{category.Name} adlı kategori bulunamadı.");
         }
 
-        public async Task<IResult> Update(CategoryUpdateDto categoryUpdateDto, string modifiedByName)
+        public async Task<IDataResult<CategoryDto>> Update(CategoryUpdateDto categoryUpdateDto, string modifiedByName)
         {
             var category = _mapper.Map<Category>(categoryUpdateDto);
             category.ModifiedByName = modifiedByName;
-            await _unitOfWork.Categories.UpdateAsync(category);
+            var updatedCategory= await _unitOfWork.Categories.UpdateAsync(category);
             await _unitOfWork.SaveAsync();
-            return new Result(ResultStatus.Success, $"{categoryUpdateDto.Name} adlı kategori başarıyla güncellenmiştir.");
+            return new DataResult<CategoryDto>(ResultStatus.Success, $"{categoryUpdateDto.Name} adlı kategori başarıyla güncellenmiştir.", new CategoryDto {
+                Category = updatedCategory,
+                ResultStatus = ResultStatus.Success,
+                Message = $"{categoryUpdateDto.Name} adlı kategori başarıyla güncellenmiştir."
+            });
         }
         public async Task<IDataResult<CategoryListDto>> GetAllByNonDeletedAndActive()
         {

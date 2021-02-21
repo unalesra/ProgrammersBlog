@@ -31,9 +31,9 @@ namespace ProgrammersBlog.Shared.Data.Abstract
         Task<List<T>> GetAllAsync(Expression<Func<T, bool>> predicate = null, params Expression<Func<T, object>>[] includeProperties);
         //eğer parametre gelmemişse hepsini listele
 
-        Task AddAsync(T entity);
+        Task <T> AddAsync(T entity);
 
-        Task UpdateAsync(T Entity);
+        Task<T> UpdateAsync(T Entity);
 
         Task DeleteAsync(T entity);
 
