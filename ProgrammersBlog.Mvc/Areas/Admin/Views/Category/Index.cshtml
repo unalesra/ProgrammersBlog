@@ -1,11 +1,12 @@
-﻿@model ProgrammersBlog.Entities.DTOs.CategoryListDto
+﻿@using ProgrammersBlog.Shared.Utilities.Resuslts.ComplexTypes
+@model ProgrammersBlog.Entities.DTOs.CategoryListDto
 @{
     Layout = "_Layout";
-    ViewBag.Title = "Kategoriler";
+    ViewBag.Title = "Kategoriler Index";
 }
-@if (Model.ResultStatus == ProgrammersBlog.Shared.Utilities.Resuslts.ComplexTypes.ResultStatus.Success)
+@if (Model.ResultStatus == ResultStatus.Success)
 {
-    @*mt-2  margin top 2 anlamında*@
+    <div id="modalPlaceHolder" aria-hidden="true"></div>
     <div class="card mb-4 mt-2">
         <div class="card-header">
             <i class="fas fa-table mr-1"></i>
@@ -17,11 +18,11 @@
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Kategori Adı</th>
-                            <th>Açıklması</th>
+                            <th>Adı</th>
+                            <th>Açıklaması</th>
                             <th>Aktif Mi?</th>
                             <th>Silinmiş Mi?</th>
-                            <th>Note</th>
+                            <th>Not</th>
                             <th>Oluşturulma Tarihi</th>
                             <th>Oluşturan Kullanıcı Adı</th>
                             <th>Son Düzenlenme Tarihi</th>
@@ -31,11 +32,11 @@
                     <tfoot>
                         <tr>
                             <th>ID</th>
-                            <th>Kategori Adı</th>
-                            <th>Açıklması</th>
+                            <th>Adı</th>
+                            <th>Açıklaması</th>
                             <th>Aktif Mi?</th>
                             <th>Silinmiş Mi?</th>
-                            <th>Note</th>
+                            <th>Not</th>
                             <th>Oluşturulma Tarihi</th>
                             <th>Oluşturan Kullanıcı Adı</th>
                             <th>Son Düzenlenme Tarihi</th>
@@ -63,192 +64,85 @@
             </div>
         </div>
     </div>
-
 }
-@if (Model.ResultStatus == ProgrammersBlog.Shared.Utilities.Resuslts.ComplexTypes.ResultStatus.Error)
-{ 
+@if (Model.ResultStatus == ResultStatus.Error)
+{
     <div class="alert alert-danger mt-3">
-        @Model.Message<br/>
-        Dashboard sayfasına dönmek için <a class="alert-link" asp-area="Admin" asp-controller="Home" asp-action="Index" >tıklayınız</a>
+        @Model.Message <br />
+        Dashboard sayfasına geri dönmek için lütfen <a class="alert-link" asp-area="Admin" asp-controller="Home" asp-action="Index">tıklayınız.</a>
     </div>
 }
-
-    @section Scripts{
-
-        <script>
-            $(document).ready(function () {
-                $('#categoriesTable').DataTable({
-                    //datatable ile ilgili olan ayarları buraya kıvırcık açıp yapıyoruz
-                    dom: "<'row'<'col-sm-3'l><'col-sm-6 text-center'B><'col-sm-3'f>>" +
+@section Scripts
+{
+    <script>
+        $(document).ready(function() {
+            $('#categoriesTable').DataTable({
+                dom:
+                    "<'row'<'col-sm-3'l><'col-sm-6 text-center'B><'col-sm-3'f>>" +
                         "<'row'<'col-sm-12'tr>>" +
                         "<'row'<'col-sm-5'i><'col-sm-7'p>>",
-                    buttons: [
-                        {
-                            text: 'Ekle',
-                            className: 'btn btn-success',
-                            action: function (e, dt, node, config) {
-                                alert('Ekle butonuna basıldı');
-                            }
+                buttons: [
+                    {
+                        text: 'Ekle',
+                        attr: {
+                            id: "btnAdd",
                         },
-                        {
-                            text: 'Yenile',
-                            className: 'btn btn-warning',
-                            action: function (e, dt, node, config) {
-                                alert('Yenile butonuna basıldı');
-                            }
-                        }
-                    ],
-                    language: {
-                        "emptyTable": "Tabloda herhangi bir veri mevcut değil",
-                        "info": "_TOTAL_ kayıttan _START_ - _END_ arasındaki kayıtlar gösteriliyor",
-                        "infoEmpty": "Kayıt yok",
-                        "infoFiltered": "(_MAX_ kayıt içerisinden bulunan)",
-                        "infoThousands": ".",
-                        "lengthMenu": "Sayfada _MENU_ kayıt göster",
-                        "loadingRecords": "Yükleniyor...",
-                        "processing": "İşleniyor...",
-                        "search": "Ara:",
-                        "zeroRecords": "Eşleşen kayıt bulunamadı",
-                        "paginate": {
-                            "first": "İlk",
-                            "last": "Son",
-                            "next": "Sonraki",
-                            "previous": "Önceki"
-                        },
-                        "aria": {
-                            "sortAscending": ": artan sütun sıralamasını aktifleştir",
-                            "sortDescending": ": azalan sütun sıralamasını aktifleştir"
-                        },
-                        "select": {
-                            "rows": {
-                                "_": "%d kayıt seçildi",
-                                "1": "1 kayıt seçildi",
-                                "0": "-"
-                            },
-                            "0": "-",
-                            "1": "%d satır seçildi",
-                            "2": "-",
-                            "_": "%d satır seçildi",
-                            "cells": {
-                                "1": "1 hücre seçildi",
-                                "_": "%d hücre seçildi"
-                            },
-                            "columns": {
-                                "1": "1 sütun seçildi",
-                                "_": "%d sütun seçildi"
-                            }
-                        },
-                        "autoFill": {
-                            "cancel": "İptal",
-                            "fillHorizontal": "Hücreleri yatay olarak doldur",
-                            "fillVertical": "Hücreleri dikey olarak doldur",
-                            "info": "-",
-                            "fill": "Bütün hücreleri <i>%d<\/i> ile doldur"
-                        },
-                        "buttons": {
-                            "collection": "Koleksiyon <span class=\"ui-button-icon-primary ui-icon ui-icon-triangle-1-s\"><\/span>",
-                            "colvis": "Sütun görünürlüğü",
-                            "colvisRestore": "Görünürlüğü eski haline getir",
-                            "copy": "Koyala",
-                            "copyKeys": "Tablodaki sisteminize kopyalamak için CTRL veya u2318 + C tuşlarına basınız.",
-                            "copySuccess": {
-                                "1": "1 satır panoya kopyalandı",
-                                "_": "%ds satır panoya kopyalandı"
-                            },
-                            "copyTitle": "Panoya kopyala",
-                            "csv": "CSV",
-                            "excel": "Excel",
-                            "pageLength": {
-                                "-1": "Bütün satırları göster",
-                                "1": "-",
-                                "_": "%d satır göster"
-                            },
-                            "pdf": "PDF",
-                            "print": "Yazdır"
-                        },
-                        "decimal": "-",
-                        "infoPostFix": "-",
-                        "searchBuilder": {
-                            "add": "Koşul Ekle",
-                            "button": {
-                                "0": "Arama Oluşturucu",
-                                "_": "Arama Oluşturucu (%d)"
-                            },
-                            "clearAll": "Hepsini Kaldır",
-                            "condition": "Koşul",
-                            "conditions": {
-                                "date": {
-                                    "after": "Sonra",
-                                    "before": "Önce",
-                                    "between": "Arasında",
-                                    "empty": "Boş",
-                                    "equals": "Eşittir",
-                                    "not": "Değildir",
-                                    "notBetween": "Dışında",
-                                    "notEmpty": "Dolu"
-                                },
-                                "moment": {
-                                    "after": "Sonra",
-                                    "before": "Önce",
-                                    "between": "Arasında",
-                                    "empty": "Boş",
-                                    "equals": "Eşittir",
-                                    "not": "Değildir",
-                                    "notBetween": "Dışında",
-                                    "notEmpty": "Dolu"
-                                },
-                                "number": {
-                                    "between": "Arasında",
-                                    "empty": "Boş",
-                                    "equals": "Eşittir",
-                                    "gt": "Büyüktür",
-                                    "gte": "Büyük eşittir",
-                                    "lt": "Küçüktür",
-                                    "lte": "Küçük eşittir",
-                                    "not": "Değildir",
-                                    "notBetween": "Dışında",
-                                    "notEmpty": "Dolu"
-                                },
-                                "string": {
-                                    "contains": "İçerir",
-                                    "empty": "Boş",
-                                    "endsWith": "İle biter",
-                                    "equals": "Eşittir",
-                                    "not": "Değildir",
-                                    "notEmpty": "Dolu",
-                                    "startsWith": "İle başlar"
-                                }
-                            },
-                            "data": "Veri",
-                            "deleteTitle": "Filtreleme kuralını silin",
-                            "leftTitle": "Kriteri dışarı çıkart",
-                            "logicAnd": "ve",
-                            "logicOr": "veya",
-                            "rightTitle": "Kriteri içeri al",
-                            "title": {
-                                "0": "Arama Oluşturucu",
-                                "_": "Arama Oluşturucu (%d)"
-                            },
-                            "value": "Değer"
-                        },
-                        "searchPanes": {
-                            "clearMessage": "Hepsini Temizle",
-                            "collapse": {
-                                "0": "Arama Bölmesi",
-                                "_": "Arama Bölmesi (%d)"
-                            },
-                            "count": "{total}",
-                            "countFiltered": "{shown}\/{total}",
-                            "emptyPanes": "Arama Bölmesi yok",
-                            "loadMessage": "Arama Bölmeleri yükleniyor ...",
-                            "title": "Etkin filtreler - %d"
-                        },
-                        "searchPlaceholder": "Ara",
-                        "thousands": "."
-                    }
+                        className: 'btn btn-success',
+                        action: function(e, dt, node, config) {
 
+                        }
+                    },
+                    {
+                        text: 'Yenile',
+                        className: 'btn btn-warning',
+                        action: function(e, dt, node, config) {
+                            alert('Yenile butonuna basıldı.');
+                        }
+                    }
+                ],
+                language: {
+                    "sDecimal": ",",
+                    "sEmptyTable": "Tabloda herhangi bir veri mevcut değil",
+                    "sInfo": "_TOTAL_ kayıttan _START_ - _END_ arasındaki kayıtlar gösteriliyor",
+                    "sInfoEmpty": "Kayıt yok",
+                    "sInfoFiltered": "(_MAX_ kayıt içerisinden bulunan)",
+                    "sInfoPostFix": "",
+                    "sInfoThousands": ".",
+                    "sLengthMenu": "Sayfada _MENU_ kayıt göster",
+                    "sLoadingRecords": "Yükleniyor...",
+                    "sProcessing": "İşleniyor...",
+                    "sSearch": "Ara:",
+                    "sZeroRecords": "Eşleşen kayıt bulunamadı",
+                    "oPaginate": {
+                        "sFirst": "İlk",
+                        "sLast": "Son",
+                        "sNext": "Sonraki",
+                        "sPrevious": "Önceki"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": artan sütun sıralamasını aktifleştir",
+                        "sSortDescending": ": azalan sütun sıralamasını aktifleştir"
+                    },
+                    "select": {
+                        "rows": {
+                            "_": "%d kayıt seçildi",
+                            "0": "",
+                            "1": "1 kayıt seçildi"
+                        }
+                    }
+                }
+            });
+            @* DataTables ends here *@
+            $(function() {
+                const url = '@Url.Action("Add", "Category")';
+                const placeHolderDiv = $('#modalPlaceHolder');
+                $('#btnAdd').click(function() {
+                    $.get(url).done(function(data) {
+                        placeHolderDiv.html(data);
+                        placeHolderDiv.find(".modal").modal('show');
+                    });
                 });
             });
-        </script>
-
-    }
+        });
+    </script>
+}
