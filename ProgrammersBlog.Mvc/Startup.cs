@@ -8,6 +8,7 @@ using ProgrammersBlog.Services.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace ProgrammersBlog.Mvc
@@ -20,7 +21,13 @@ namespace ProgrammersBlog.Mvc
         {
             //bir mvc katmaný olduðunu gösterdik.
             //her önyüz deðiþikliðinde önyüzü derlemek zorunda kalmamak için addrazorruntimecompiilation ekledik.
-            services.AddControllersWithViews().AddRazorRuntimeCompilation();
+            // json objelerinin dönüþtürlmesi için addjsonoptions geldi
+            services.AddControllersWithViews().AddRazorRuntimeCompilation().AddJsonOptions(opt=> {
+                opt.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+
+                //iç içe olan objeler birbirini referans ettiðinde sorun olmuþmamasý için ekledik.
+                opt.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
+            });
 
             //derlenme esnasýnda automapper'in burada olan sýnýflarý taramasýný saðlýyoruz.
             services.AddAutoMapper(typeof(CategoryProfile), typeof(ArticleProfile));
