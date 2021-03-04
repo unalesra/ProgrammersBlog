@@ -42,26 +42,23 @@ namespace ProgrammersBlog.Mvc.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = await _categoryService.Add(categoryAddDto, "Esra Ünal");
-                if (result.ResultStatus==ResultStatus.Success)
+                var result = await _categoryService.Add(categoryAddDto, "Alper Tunga");
+                if (result.ResultStatus == ResultStatus.Success)
                 {
-                    //json'a dönüştükten sonra ben almak istiyorum bu yüzden jsonserializer kullandık.
-                    var categoryAjaxModel = JsonSerializer.Serialize(new CategoryAddAjaxViewModel
+                    var categoryAddAjaxModel = JsonSerializer.Serialize(new CategoryAddAjaxViewModel
                     {
-                        CategoryDto=result.Data,
-                        CategoryAddPartial= await this.RenderViewToStringAsync("_CategoryAddPartial", categoryAddDto),
+                        CategoryDto = result.Data,
+                        CategoryAddPartial = await this.RenderViewToStringAsync("_CategoryAddPartial", categoryAddDto)
                     });
-
-                    return Json(categoryAjaxModel);
+                    return Json(categoryAddAjaxModel);
                 }
-
-                var categoryAjaxErrorModel = JsonSerializer.Serialize(new CategoryAddAjaxViewModel
-                {
-                    CategoryAddPartial = await this.RenderViewToStringAsync("_CategoryAddPartial", categoryAddDto),
-                });
-                return Json(categoryAjaxErrorModel);
             }
-        }
+            var categoryAddAjaxErrorModel = JsonSerializer.Serialize(new CategoryAddAjaxViewModel
+            {
+                CategoryAddPartial = await this.RenderViewToStringAsync("_CategoryAddPartial", categoryAddDto)
+            });
+            return Json(categoryAddAjaxErrorModel);
 
+        }
     }
 }
