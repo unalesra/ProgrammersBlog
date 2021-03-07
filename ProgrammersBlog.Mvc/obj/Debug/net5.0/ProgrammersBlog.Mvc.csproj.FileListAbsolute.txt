@@ -401,3 +401,4 @@ E:\VisualStudioProjects\C#\Web\ProgrammersBlog\ProgrammersBlog.Mvc\obj\Debug\net
 E:\VisualStudioProjects\C#\Web\ProgrammersBlog\ProgrammersBlog.Mvc\obj\Debug\net5.0\Razor\Areas\Admin\Views\Category\_CategoryAddPartial.cshtml.g.cs
 E:\VisualStudioProjects\C#\Web\ProgrammersBlog\ProgrammersBlog.Mvc\bin\Debug\net5.0\Microsoft.AspNetCore.JsonPatch.dll
 E:\VisualStudioProjects\C#\Web\ProgrammersBlog\ProgrammersBlog.Mvc\bin\Debug\net5.0\Newtonsoft.Json.Bson.dll
+E:\VisualStudioProjects\C#\Web\ProgrammersBlog\ProgrammersBlog.Mvc\obj\Debug\net5.0\Razor\Areas\Admin\Views\Category\_CategoryUpdatePartial.cshtml.g.cs

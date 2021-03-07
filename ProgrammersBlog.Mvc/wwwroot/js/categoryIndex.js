@@ -50,7 +50,7 @@
                                     <td>${convertToShortDate(category.ModifiedDate)}</td>
                                     <td>${category.ModifiedByName}</td>
                                     <td>
-                                    <button class="btn btn-primary btn-sm"><span class="fas fa-edit"></span></button>
+                                    <button class="btn btn-primary btn-sm btn-update" data-id="${category.Id}"><span class="fas fa-edit"></span></button>
                                     <button class="btn btn-danger btn-sm btn-delete" data-id="${category.Id}"><span class="fas fa-minus-circle"></span></button>
                                     </td>
                                             </tr>`;
@@ -158,7 +158,7 @@
                                 <td>${convertToShortDate(categoryAddAjaxModel.CategoryDto.Category.ModifiedDate)}</td>
                                 <td>${categoryAddAjaxModel.CategoryDto.Category.ModifiedByName}</td>
                                 <td>
-                                <button class="btn btn-primary btn-sm"><span class="fas fa-edit"></span></button>
+                                <button class="btn btn-primary btn-sm btn-update" data-id="${categoryAddAjaxModel.CategoryDto.Category.Id}"><span class="fas fa-edit"></span></button>
                                 <button class="btn btn-danger btn-sm btn-delete" data-id="${categoryAddAjaxModel.CategoryDto.Category.Id}"><span class="fas fa-minus-circle"></span></button>
                                 </td>
                             </tr>
@@ -242,4 +242,29 @@
                 }
             });
         });
+
+    /*update*/
+    $(function () {
+        const url = '/Admin/Category/Update/';
+        const placeHolderDiv = $('#modalPlaceHolder');
+
+        $(document).on('click',
+            '.btn-update',
+            function (event) {
+                event.preventDefault();
+                const id = $(this).attr('data-id'); //eventin gerçekleştiği butonu this ile almış oluyoruz
+
+                //jQuery get
+                $.get(url, { categoryId: id }).done(function (data) {
+                    placeHolderDiv.html(data); //benim sana yeni verdiğim html ile ekrana ver
+                    placeHolderDiv.find('.modal').modal('show');  //bunu göster
+
+                }).fail(function () {
+                    toastr.error("Bir hata oluştu");
+                });
+            });
+
+    });
+
+
 });
