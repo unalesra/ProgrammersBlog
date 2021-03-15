@@ -46,73 +46,74 @@ namespace ProgrammersBlog.Data.Concreate.EntityFramework.Mappings
             builder.HasOne<User>(a => a.User).WithMany(u => u.Articles).HasForeignKey(a=>a.UserId);
             builder.ToTable("Articles");
 
+            //identity ekledikten sonra sorun çıktı çünkü id'si 1 olan user yok. Bu yüzden yorum satırına aldık.
 
-            builder.HasData(new Article{
-                Id=1,
-                CategoryId=1,
-                UserId = 1,
-                Title ="C# 9.0 ve .NET 5 Yenilikleri",
-                Content= "Lorem Ipsum, dizgi ve baskı endüstrisinde kullanılan mıgır metinlerdir. Lorem Ipsum, adı bilinmeyen bir matbaacının bir hurufat numune kitabı oluşturmak üzere bir yazı galerisini alarak karıştırdığı 1500'lerden beri endüstri standardı sahte metinler olarak kullanılmıştır. Beşyüz yıl boyunca varlığını sürdürmekle kalmamış, aynı zamanda pek değişmeden elektronik dizgiye de sıçramıştır. 1960'larda Lorem Ipsum pasajları da içeren Letraset yapraklarının yayınlanması ile ve yakın zamanda Aldus PageMaker gibi Lorem Ipsum sürümleri içeren masaüstü yayıncılık yazılımları ile popüler olmuştur.",
-                Tumbnail="Default.jpg",
-                SeoDescription= "C# 9.0 ve .NET 5 Yenilikleri",
-                SeoTags="C#, C#9, .NET5",
-                SeoAuthor="Alper Tunga",
-                Date=DateTime.Now,
-                ViewsCount=100,
-                CommentCount=1,
+            //builder.HasData(new Article{
+            //    Id=1,
+            //    CategoryId=1,
+            //    UserId = 1,
+            //    Title ="C# 9.0 ve .NET 5 Yenilikleri",
+            //    Content= "Lorem Ipsum, dizgi ve baskı endüstrisinde kullanılan mıgır metinlerdir. Lorem Ipsum, adı bilinmeyen bir matbaacının bir hurufat numune kitabı oluşturmak üzere bir yazı galerisini alarak karıştırdığı 1500'lerden beri endüstri standardı sahte metinler olarak kullanılmıştır. Beşyüz yıl boyunca varlığını sürdürmekle kalmamış, aynı zamanda pek değişmeden elektronik dizgiye de sıçramıştır. 1960'larda Lorem Ipsum pasajları da içeren Letraset yapraklarının yayınlanması ile ve yakın zamanda Aldus PageMaker gibi Lorem Ipsum sürümleri içeren masaüstü yayıncılık yazılımları ile popüler olmuştur.",
+            //    Tumbnail="Default.jpg",
+            //    SeoDescription= "C# 9.0 ve .NET 5 Yenilikleri",
+            //    SeoTags="C#, C#9, .NET5",
+            //    SeoAuthor="Alper Tunga",
+            //    Date=DateTime.Now,
+            //    ViewsCount=100,
+            //    CommentCount=1,
 
-                IsActive = true,
-                IsDeleted = false,
-                CreatedByName = "InitialCreate", //bunu veritabanu oluşturdu anlamında koyuluyor
-                CreatedDate = DateTime.Now,
-                ModifiedByName = "InitialCreate",
-                ModifiedDate = DateTime.Now,
-                Note = "C# 9.0 ve .NET 5 Yenilikleri"
-            }, new Article {
-                Id = 2,
-                CategoryId = 2,
-                UserId = 1,
-                Title = "C++ 9.0 ve .NET 5 Yenilikleri",
-                Content = "Lorem Ipsum, dizgi ve baskı endüstrisinde kullanılan mıgır metinlerdir. Lorem Ipsum, adı bilinmeyen bir matbaacının bir hurufat numune kitabı oluşturmak üzere bir yazı galerisini alarak karıştırdığı 1500'lerden beri endüstri standardı sahte metinler olarak kullanılmıştır. Beşyüz yıl boyunca varlığını sürdürmekle kalmamış, aynı zamanda pek değişmeden elektronik dizgiye de sıçramıştır. 1960'larda Lorem Ipsum pasajları da içeren Letraset yapraklarının yayınlanması ile ve yakın zamanda Aldus PageMaker gibi Lorem Ipsum sürümleri içeren masaüstü yayıncılık yazılımları ile popüler olmuştur.",
-                Tumbnail = "Default.jpg",
-                SeoDescription = "C++ Yenilikleri",
-                SeoTags = "C++",
-                SeoAuthor = "Alper Tunga",
-                Date = DateTime.Now,
-                ViewsCount = 200,
-                CommentCount = 1,
+            //    IsActive = true,
+            //    IsDeleted = false,
+            //    CreatedByName = "InitialCreate", //bunu veritabanu oluşturdu anlamında koyuluyor
+            //    CreatedDate = DateTime.Now,
+            //    ModifiedByName = "InitialCreate",
+            //    ModifiedDate = DateTime.Now,
+            //    Note = "C# 9.0 ve .NET 5 Yenilikleri"
+            //}, new Article {
+            //    Id = 2,
+            //    CategoryId = 2,
+            //    UserId = 1,
+            //    Title = "C++ 9.0 ve .NET 5 Yenilikleri",
+            //    Content = "Lorem Ipsum, dizgi ve baskı endüstrisinde kullanılan mıgır metinlerdir. Lorem Ipsum, adı bilinmeyen bir matbaacının bir hurufat numune kitabı oluşturmak üzere bir yazı galerisini alarak karıştırdığı 1500'lerden beri endüstri standardı sahte metinler olarak kullanılmıştır. Beşyüz yıl boyunca varlığını sürdürmekle kalmamış, aynı zamanda pek değişmeden elektronik dizgiye de sıçramıştır. 1960'larda Lorem Ipsum pasajları da içeren Letraset yapraklarının yayınlanması ile ve yakın zamanda Aldus PageMaker gibi Lorem Ipsum sürümleri içeren masaüstü yayıncılık yazılımları ile popüler olmuştur.",
+            //    Tumbnail = "Default.jpg",
+            //    SeoDescription = "C++ Yenilikleri",
+            //    SeoTags = "C++",
+            //    SeoAuthor = "Alper Tunga",
+            //    Date = DateTime.Now,
+            //    ViewsCount = 200,
+            //    CommentCount = 1,
 
-                IsActive = true,
-                IsDeleted = false,
-                CreatedByName = "InitialCreate", //bunu veritabanu oluşturdu anlamında koyuluyor
-                CreatedDate = DateTime.Now,
-                ModifiedByName = "InitialCreate",
-                ModifiedDate = DateTime.Now,
-                Note = "C++ Yenilikleri"
+            //    IsActive = true,
+            //    IsDeleted = false,
+            //    CreatedByName = "InitialCreate", //bunu veritabanu oluşturdu anlamında koyuluyor
+            //    CreatedDate = DateTime.Now,
+            //    ModifiedByName = "InitialCreate",
+            //    ModifiedDate = DateTime.Now,
+            //    Note = "C++ Yenilikleri"
 
-            }, new Article {
-                Id = 3,
-                CategoryId = 3,
-                UserId = 1,
-                Title = "JavaScript 9.0 ve .NET 5 Yenilikleri",
-                Content = "Lorem Ipsum, dizgi ve baskı endüstrisinde kullanılan mıgır metinlerdir. Lorem Ipsum, adı bilinmeyen bir matbaacının bir hurufat numune kitabı oluşturmak üzere bir yazı galerisini alarak karıştırdığı 1500'lerden beri endüstri standardı sahte metinler olarak kullanılmıştır. Beşyüz yıl boyunca varlığını sürdürmekle kalmamış, aynı zamanda pek değişmeden elektronik dizgiye de sıçramıştır. 1960'larda Lorem Ipsum pasajları da içeren Letraset yapraklarının yayınlanması ile ve yakın zamanda Aldus PageMaker gibi Lorem Ipsum sürümleri içeren masaüstü yayıncılık yazılımları ile popüler olmuştur.",
-                Tumbnail = "Default.jpg",
-                SeoDescription = "JavaScript Yenilikleri",
-                SeoTags = "JavaScript",
-                SeoAuthor = "Alper Tunga",
-                Date = DateTime.Now,
-                ViewsCount = 300,
-                CommentCount = 1,
+            //}, new Article {
+            //    Id = 3,
+            //    CategoryId = 3,
+            //    UserId = 1,
+            //    Title = "JavaScript 9.0 ve .NET 5 Yenilikleri",
+            //    Content = "Lorem Ipsum, dizgi ve baskı endüstrisinde kullanılan mıgır metinlerdir. Lorem Ipsum, adı bilinmeyen bir matbaacının bir hurufat numune kitabı oluşturmak üzere bir yazı galerisini alarak karıştırdığı 1500'lerden beri endüstri standardı sahte metinler olarak kullanılmıştır. Beşyüz yıl boyunca varlığını sürdürmekle kalmamış, aynı zamanda pek değişmeden elektronik dizgiye de sıçramıştır. 1960'larda Lorem Ipsum pasajları da içeren Letraset yapraklarının yayınlanması ile ve yakın zamanda Aldus PageMaker gibi Lorem Ipsum sürümleri içeren masaüstü yayıncılık yazılımları ile popüler olmuştur.",
+            //    Tumbnail = "Default.jpg",
+            //    SeoDescription = "JavaScript Yenilikleri",
+            //    SeoTags = "JavaScript",
+            //    SeoAuthor = "Alper Tunga",
+            //    Date = DateTime.Now,
+            //    ViewsCount = 300,
+            //    CommentCount = 1,
 
-                IsActive = true,
-                IsDeleted = false,
-                CreatedByName = "InitialCreate", //bunu veritabanu oluşturdu anlamında koyuluyor
-                CreatedDate = DateTime.Now,
-                ModifiedByName = "InitialCreate",
-                ModifiedDate = DateTime.Now,
-                Note = "JavaScript Yenilikleri"
+            //    IsActive = true,
+            //    IsDeleted = false,
+            //    CreatedByName = "InitialCreate", //bunu veritabanu oluşturdu anlamında koyuluyor
+            //    CreatedDate = DateTime.Now,
+            //    ModifiedByName = "InitialCreate",
+            //    ModifiedDate = DateTime.Now,
+            //    Note = "JavaScript Yenilikleri"
 
-            });
+            //});
 
         }
     }

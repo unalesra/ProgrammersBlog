@@ -29,6 +29,8 @@ namespace ProgrammersBlog.Mvc
                 opt.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
             });
 
+            services.AddSession();
+
             //derlenme esnasýnda automapper'in burada olan sýnýflarý taramasýný saðlýyoruz.
             services.AddAutoMapper(typeof(CategoryProfile), typeof(ArticleProfile));
 
@@ -47,11 +49,17 @@ namespace ProgrammersBlog.Mvc
                 app.UseStatusCodePages();
             }
 
+            //session'un yeri de aþaðýdaki sebepten ötürü önemli
+            app.UseSession();
+
             //static dosyalarý kullan
             app.UseStaticFiles();
-
-
             app.UseRouting();
+
+//routing yapýldýktan(kullanýncýnýn nereye gitmek istediðini öðrendikten) sonra authentication ve authorization kontrollerinin yapýlmasý gerekiyor daha önce yapamayýz.
+            app.UseAuthentication();
+            app.UseAuthorization();
+
 
             app.UseEndpoints(endpoints =>
             {

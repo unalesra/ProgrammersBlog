@@ -13,10 +13,10 @@ namespace ProgrammersBlog.Data.Concreate.EntityFramework.Mappings
         public void Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<UserClaim> b)
         {
             // Primary key
-            b.HasKey(rc => rc.Id);
+            b.HasKey(uc => uc.Id);
 
-            // Maps to the AspNetRoleClaims table
-            b.ToTable("AspNetRoleClaims");
+            // Maps to the AspNetUserClaims table
+            b.ToTable("AspNetUserClaims");
         }
     }
 }
