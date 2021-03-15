@@ -29,6 +29,7 @@ namespace ProgrammersBlog.Mvc
                 opt.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
             });
 
+            //session
             services.AddSession();
 
             //derlenme esnasýnda automapper'in burada olan sýnýflarý taramasýný saðlýyoruz.
@@ -36,6 +37,27 @@ namespace ProgrammersBlog.Mvc
 
             //servis katmaný ile mvc katmaný arasýnaki baðlantý
             services.LoadMyService();
+
+            //cookie
+            services.ConfigureApplicationCookie(options=> {
+
+                //login yapýlýrken hangi sayfaya yönlendirileceðim?
+                //admin area user controller login action
+                options.LoginPath = new PathString("/Admin/User/Login");
+
+                options.LogoutPath = new PathString("Admin/User/Logout");
+
+                options.Cookie = new CookieBuilder {
+                    Name = "ProgrammersBlog",
+                    HttpOnly = true,   //güvenlik için true veriyoruz. cookie iþlemlerini sadece http üzerinden göndermesini saðlýyoruz ve böylece javascript tarafýnda(ön yüz) kimse cookie bilgilerimize eriþemmeiþ oluyor.
+                    SameSite = SameSiteMode.Strict,   //CSRF'yi önlemek için, cookie ilgileri sadece benim sitemden gelirse kullan dmeiþ olduk.
+                    SecurePolicy= CookieSecurePolicy.SameAsRequest, //http üzeirnden gelirse htttp, https üzerinden gelirse https üzerinden bilgileri aktar demek ama gerçek uygulamalrda always olarak kullanýlýr yani ne olursa olsun https üzerinden bilgileri aktar demiþ oluruz. 
+                };
+
+                options.SlidingExpiration = true; //kullanýcý giriþ yaptýktan sonra ne kadar süre tanýnacak ve ne zaman tekrar giriþ yapmasý gerekecek?
+                options.ExpireTimeSpan = System.TimeSpan.FromDays(7);  //7 gün boyunca bir daha giriþ yapmasý gerekmesin
+                options.AccessDeniedPath = new PathString("/Admin/User/AccessDenied"); //sistem içerisinde zaten giriþ yapmýþ bir kullanýcý yetkisinin olmadýðý yere girerse buraya yönlendir.
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
