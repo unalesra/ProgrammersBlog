@@ -45,7 +45,7 @@ namespace ProgrammersBlog.Mvc
                 //admin area user controller login action
                 options.LoginPath = new PathString("/Admin/User/Login");
 
-                options.LogoutPath = new PathString("Admin/User/Logout");
+                options.LogoutPath = new PathString("/Admin/User/Logout");
 
                 options.Cookie = new CookieBuilder {
                     Name = "ProgrammersBlog",
@@ -78,7 +78,7 @@ namespace ProgrammersBlog.Mvc
             app.UseStaticFiles();
             app.UseRouting();
 
-//routing yapýldýktan(kullanýncýnýn nereye gitmek istediðini öðrendikten) sonra authentication ve authorization kontrollerinin yapýlmasý gerekiyor daha önce yapamayýz.
+            //routing yapýldýktan(kullanýncýnýn nereye gitmek istediðini öðrendikten) sonra authentication ve authorization kontrollerinin yapýlmasý gerekiyor daha önce yapamayýz.
             app.UseAuthentication();
             app.UseAuthorization();
 
