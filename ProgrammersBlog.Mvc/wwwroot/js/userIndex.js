@@ -1,7 +1,8 @@
 ﻿$(document).ready(function () {
 
-    /*Data Table starts here*/
-    $('#usersTable').DataTable({
+    /* DataTables start here. */
+
+    const dataTable = $('#usersTable').DataTable({
         dom:
             "<'row'<'col-sm-3'l><'col-sm-6 text-center'B><'col-sm-3'f>>" +
             "<'row'<'col-sm-12'tr>>" +
@@ -31,14 +32,12 @@
                         success: function (data) {
                             const categoryListDto = jQuery.parseJSON(data);
                             console.log(categoryListDto);
-
-                            // === ile hem veri tipini hem de doğruluğunu kontrol ediyoruz.
                             if (categoryListDto.ResultStatus === 0) {
                                 let tableBody = "";
                                 $.each(categoryListDto.Categories.$values,
                                     function (index, category) {
                                         tableBody += `
-                                                <tr name="${category.Id}">
+                                                <tr>
                                     <td>${category.Id}</td>
                                     <td>${category.Name}</td>
                                     <td>${category.Description}</td>
@@ -50,13 +49,11 @@
                                     <td>${convertToShortDate(category.ModifiedDate)}</td>
                                     <td>${category.ModifiedByName}</td>
                                     <td>
-                                    <button class="btn btn-primary btn-sm btn-update" data-id="${category.Id}"><span class="fas fa-edit"></span></button>
-                                    <button class="btn btn-danger btn-sm btn-delete" data-id="${category.Id}"><span class="fas fa-minus-circle"></span></button>
+                                <button class="btn btn-primary btn-sm btn-update" data-id="${category.Id}"><span class="fas fa-edit"></span></button>
+                                <button class="btn btn-danger btn-sm btn-delete" data-id="${category.Id}"><span class="fas fa-minus-circle"></span></button>
                                     </td>
                                             </tr>`;
                                     });
-
-                                //html ile yazılanlarla, kendi tablomuzu yer değiştiriyoruz.
                                 $('#categoriesTable > tbody').replaceWith(tableBody);
                                 $('.spinner-border').hide();
                                 $('#categoriesTable').fadeIn(1400);
@@ -106,12 +103,13 @@
             }
         }
     });
-    /* DataTables ends here */
 
-    //formun içindeki verileri categoryaddDto'ya dönüştürüyorum.
-    /* Ajax GET / Getting the _CategoryAddPartial as Modal Form strats from here */
+    /* DataTables end here */
+
+    /* Ajax GET / Getting the _UserAddPartial as Modal Form starts from here. */
+
     $(function () {
-        const url = '/Admin/Category/Add/';
+        const url = '/Admin/User/Add/';
         const placeHolderDiv = $('#modalPlaceHolder');
         $('#btnAdd').click(function () {
             $.get(url).done(function (data) {
@@ -120,87 +118,75 @@
             });
         });
 
-        /* Ajax GET / Getting the _CategoryAddPartial as Modal Form ends here */
+        /* Ajax GET / Getting the _UserAddPartial as Modal Form ends here. */
 
-        /* Ajax POST / Posting the FormData as CategoryAddDto Form starts here */
+        /* Ajax POST / Posting the FormData as UserAddDto starts from here. */
 
-        placeHolderDiv.on('click', '#btnSave', function (event) {
-            event.preventDefault() // butonun kendi click eventini engellemek için yaptık, mesela submit butonuna basıldığında sayfa yenilenir ben her ne kadar üstüne bir şey yazsamda, bu sayede kendi click işlemini engellemiş oldum
+        placeHolderDiv.on('click',
+            '#btnSave',
+            function (event) {
+                event.preventDefault();
+                const form = $('#form-user-add');
+                const actionUrl = form.attr('action');
+                const dataToSend = new FormData(form.get(0));   //yeni form oluşturup, 0.indexteki formun bilgilerini eklemiş olduk
+                //$.post(actionUrlidataTosend).done ajax işleminin biraz daha hazır ayarlar ile kullanılmış hali gibi. ama şimdi jquery kullanmayı bıraktığımız (çünkü bu şekilde datatable'ın bizim yaptığımız işlemlerden haberi olmuyor) için bunu değiştirmemiz lazım
+                $.ajax({
+                    url: actionUrl,
+                    type: 'POST',
+                    data: dataToSend,
+                    processData: false,
+                    contentType: false,
+                    success: function (data) {
+                        console.log(data);
+                        const userAddAjaxModel = jQuery.parseJSON(data);
+                        console.log(userAddAjaxModel);
+                        const newFormBody = $('.modal-body', userAddAjaxModel.UserAddPartial);
+                        placeHolderDiv.find('.modal-body').replaceWith(newFormBody);
+                        const isValid = newFormBody.find('[name="IsValid"]').val() === 'True';
+                        if (isValid) {
+                            placeHolderDiv.find('.modal').modal('hide');
 
-            const form = $('#form-category-add');
-            const actionUrl = form.attr('action');
-            const dataToSend = form.serialize();
-
-            //done neyi return edeceğini söylüyor
-            $.post(actionUrl, dataToSend).done(function (data) {
-                const categoryAddAjaxModel = jQuery.parseJSON(data);
-                const newFormBody = $('.modal-body', categoryAddAjaxModel.CategoryAddPartial);  //table da class olarak modal body kullanılmış, onu kullanarak seçiyoruz.
-                placeHolderDiv.find('.modal-body').replaceWith(newFormBody);
-
-                //attr seçerken [] kullanılır. name'ini ısvalid verdiğimiz labele ulaşmaya çalışıyoruz.
-                //sonra da value değerini okuyup ona true değerini atıyoruz.
-                const IsValid = newFormBody.find('[name="IsValid"]').val() === 'True';
-
-                if (IsValid) {
-                    placeHolderDiv.find('.modal').modal('hide');
-
-                    // `` ile string formatlıyoruz.
-                    const newTableRow = `
-                            <tr name="${categoryAddAjaxModel.CategoryDto.Category.Id}">
-                                <td>${categoryAddAjaxModel.CategoryDto.Category.Id}</td>
-                                <td>${categoryAddAjaxModel.CategoryDto.Category.Name}</td>
-                                <td>${categoryAddAjaxModel.CategoryDto.Category.Description}</td>
-                                <td>${convertFirstLetterToUpperCase(categoryAddAjaxModel.CategoryDto.Category.IsActive.toString())}</td>
-                                <td>${convertFirstLetterToUpperCase(categoryAddAjaxModel.CategoryDto.Category.IsDeleted.toString())}</td>
-                                <td>${categoryAddAjaxModel.CategoryDto.Category.Note}</td>
-                                <td>${convertToShortDate(categoryAddAjaxModel.CategoryDto.Category.CreatedDate)}</td>
-                                <td>${categoryAddAjaxModel.CategoryDto.Category.CreatedByName}</td>
-                                <td>${convertToShortDate(categoryAddAjaxModel.CategoryDto.Category.ModifiedDate)}</td>
-                                <td>${categoryAddAjaxModel.CategoryDto.Category.ModifiedByName}</td>
-                                <td>
-                                <button class="btn btn-primary btn-sm btn-update" data-id="${categoryAddAjaxModel.CategoryDto.Category.Id}"><span class="fas fa-edit"></span></button>
-                                <button class="btn btn-danger btn-sm btn-delete" data-id="${categoryAddAjaxModel.CategoryDto.Category.Id}"><span class="fas fa-minus-circle"></span></button>
-                                </td>
-                            </tr>
-                                `;
-
-                    //$ ile jquery ya da javascript objesi haline getirmiş oluyoruz.
-                    const newTableRowObject = $(newTableRow);
-                    newTableRowObject.hide();
-
-                    //# id ile seçmede kullanılıyor
-                    $('#categoriesTable').append(newTableRowObject);
-
-                    //efektli gelmesini sağladık.
-                    newTableRowObject.fadeIn(3500);
-                    toastr.success(`${categoryAddAjaxModel.CategoryDto.Message}`, 'Başarılı İşlem!');
-                }
-                else {
-                    let summaryText = "";
-                    $('#validation-summer > ul > li').each(function () {
-                        let text = $(this).text();
-                        summaryText = `*${text}\n`;
-                    });
-                    toastr.warning(summaryText);
-                }
+                            //datatable api, en tepede datatable'ı initialize ettik
+                            dataTable.row.add([
+                                userAddAjaxModel.UserDto.User.Id,
+                                userAddAjaxModel.UserDto.User.UserName,
+                                userAddAjaxModel.UserDto.User.Email,
+                                userAddAjaxModel.UserDto.User.PhoneNumber,
+                                //zaten başlangıç klasöründe olduğumuz için ~/img dememe gerek yok wwwroot başlangıç klasörü olarak sayılıyor
+                                `<img src="/img/${userAddAjaxModel.UserDto.User.Picture}" alt="${userAddAjaxModel.UserDto.User.UserName}" style="max-height: 50px; max-width: 50px;" />`,
+                                `<td>
+                                <button class="btn btn-primary btn-sm btn-update" data-id="userAddAjaxModel.UserDto.User.Id"><span class="fas fa-edit"></span></button>
+                                <button class="btn btn-danger btn-sm btn-delete" data-id="userAddAjaxModel.UserDto.User.Id"><span class="fas fa-minus-circle"></span></button>
+                            </td>`
+                            ]).draw();
+                            toastr.success(`${userAddAjaxModel.UserDto.Message}`, 'Başarılı İşlem!');
+                        } else {
+                            let summaryText = "";
+                            $('#validation-summary > ul > li').each(function () {
+                                let text = $(this).text();
+                                summaryText = `*${text}\n`;
+                            });
+                            toastr.warning(summaryText);
+                        }
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
+                });
             });
-        });
-
     });
 
+    /* Ajax POST / Posting the FormData as CategoryAddDto ends here. */
 
-    /* Ajax POST / Posting the FormData as CategoryAddDto ends here */
     /* Ajax POST / Deleting a Category starts from here */
 
-    //ilk olarak sil butonuna tıklanmayı yakalamalıyız
     $(document).on('click',
         '.btn-delete',
         function (event) {
-            event.preventDefault(); //butonun kendi işlevselliğini deactive ettik.
-            const id = $(this).attr('data-id'); //click yakalandığında hangi butona basılmış onu alıyoruz this ile sonra da butona verdiğimiz data-id'yi alıyoruz.
+            event.preventDefault();
+            const id = $(this).attr('data-id');
             const tableRow = $(`[name="${id}"]`);
-            const categoryName = tableRow.find('td:eq(1)').text();  //2.sıradaki table datayı seç dedik (yani name alanı)
-            //sweetalert
+            const categoryName = tableRow.find('td:eq(1)').text();
             Swal.fire({
                 title: 'Silmek istediğinize emin misiniz?',
                 text: `${categoryName} adlı kategori silinicektir!`,
@@ -225,6 +211,7 @@
                                     `${categoryDto.Category.Name} adlı kategori başarıyla silinmiştir.`,
                                     'success'
                                 );
+
                                 tableRow.fadeOut(3500);
                             } else {
                                 Swal.fire({
@@ -236,35 +223,32 @@
                         },
                         error: function (err) {
                             console.log(err);
-                            toastr.error(`${err.responseText}`, "Hata!");
+                            toastr.error(`${err.responseText}`, "Hata!")
                         }
                     });
                 }
             });
         });
 
-    /*update*/
+    /* Ajax GET / Getting the _CategoryUpdatePartial as Modal Form starts from here. */
+
     $(function () {
         const url = '/Admin/Category/Update/';
         const placeHolderDiv = $('#modalPlaceHolder');
-
         $(document).on('click',
             '.btn-update',
             function (event) {
                 event.preventDefault();
-                const id = $(this).attr('data-id'); //eventin gerçekleştiği butonu this ile almış oluyoruz
-
-                //jQuery get
+                const id = $(this).attr('data-id');
                 $.get(url, { categoryId: id }).done(function (data) {
-                    placeHolderDiv.html(data); //benim sana yeni verdiğim html ile ekrana ver
-                    placeHolderDiv.find('.modal').modal('show');  //bunu göster
-
+                    placeHolderDiv.html(data);
+                    placeHolderDiv.find('.modal').modal('show');
                 }).fail(function () {
-                    toastr.error("Bir hata oluştu");
+                    toastr.error("Bir hata oluştu.");
                 });
             });
 
-    /*Ajax POST/ Updating a Category starts from here*/
+        /* Ajax POST / Updating a Category starts from here */
 
         placeHolderDiv.on('click',
             '#btnUpdate',
@@ -286,17 +270,25 @@
                                 <tr name="${categoryUpdateAjaxModel.CategoryDto.Category.Id}">
                                                     <td>${categoryUpdateAjaxModel.CategoryDto.Category.Id}</td>
                                                     <td>${categoryUpdateAjaxModel.CategoryDto.Category.Name}</td>
-                                                    <td>${categoryUpdateAjaxModel.CategoryDto.Category.Description}</td>
-                                                    <td>${convertFirstLetterToUpperCase(categoryUpdateAjaxModel.CategoryDto.Category.IsActive.toString())}</td>
-                                                    <td>${convertFirstLetterToUpperCase(categoryUpdateAjaxModel.CategoryDto.Category.IsDeleted.toString())}</td>
+                                                    <td>${categoryUpdateAjaxModel.CategoryDto.Category
+                                .Description}</td>
+                                                    <td>${convertFirstLetterToUpperCase(categoryUpdateAjaxModel
+                                    .CategoryDto.Category.IsActive.toString())}</td>
+                                                    <td>${convertFirstLetterToUpperCase(categoryUpdateAjaxModel
+                                        .CategoryDto.Category.IsDeleted.toString())}</td>
                                                     <td>${categoryUpdateAjaxModel.CategoryDto.Category.Note}</td>
-                                                    <td>${convertToShortDate(categoryUpdateAjaxModel.CategoryDto.Category.CreatedDate)}</td>
-                                                    <td>${categoryUpdateAjaxModel.CategoryDto.Category.CreatedByName}</td>
-                                                    <td>${convertToShortDate(categoryUpdateAjaxModel.CategoryDto.Category.ModifiedDate)}</td>
-                                                    <td>${categoryUpdateAjaxModel.CategoryDto.Category.ModifiedByName}</td>
+                                                    <td>${convertToShortDate(categoryUpdateAjaxModel.CategoryDto
+                                            .Category.CreatedDate)}</td>
+                                                    <td>${categoryUpdateAjaxModel.CategoryDto.Category
+                                .CreatedByName}</td>
+                                                    <td>${convertToShortDate(categoryUpdateAjaxModel.CategoryDto
+                                    .Category.ModifiedDate)}</td>
+                                                    <td>${categoryUpdateAjaxModel.CategoryDto.Category
+                                .ModifiedByName}</td>
                                                     <td>
                                                         <button class="btn btn-primary btn-sm btn-update" data-id="${categoryUpdateAjaxModel.CategoryDto.Category.Id}"><span class="fas fa-edit"></span></button>
-                                                        <button class="btn btn-danger btn-sm btn-delete" data-id="${categoryUpdateAjaxModel.CategoryDto.Category.Id}"><span class="fas fa-minus-circle"></span></button>
+                                                        <button class="btn btn-danger btn-sm btn-delete" data-id="${categoryUpdateAjaxModel.CategoryDto.Category.Id
+                            }"><span class="fas fa-minus-circle"></span></button>
                                                     </td>
                                                 </tr>`;
                         const newTableRowObject = $(newTableRow);
@@ -319,5 +311,4 @@
             });
 
     });
-
 });

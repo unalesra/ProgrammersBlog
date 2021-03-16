@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "ye6t03Xrx0Ip/J3X/dEPbtD7UCtBxCxAZsCr1CocuvjMbi6H/JyJazgiNnbkcCV3Ro7oQAj7gDR95db2HmGOxQ==",
+  "dgSpecHash": "M1i1q4IaqR4myhNUnpjq0lFAu0tyxQHxfEor/rFCyPPZuJr5Vj42iKfE/7Fq98/XYkoFEfwp4tYbCP9cz2jOUQ==",
   "success": true,
   "projectFilePath": "E:\\VisualStudioProjects\\C#\\Web\\ProgrammersBlog\\ProgrammersBlog.Entities\\ProgrammersBlog.Entities.csproj",
   "expectedPackageFiles": [
@@ -52,9 +52,9 @@
     "C:\\Users\\Nokta Bilgisayar\\.nuget\\packages\\microsoft.codeanalysis.razor\\2.2.0\\microsoft.codeanalysis.razor.2.2.0.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\microsoft.dotnet.platformabstractions\\2.1.0\\microsoft.dotnet.platformabstractions.2.1.0.nupkg.sha512",
-    "C:\\Users\\Nokta Bilgisayar\\.nuget\\packages\\microsoft.entityframeworkcore\\5.0.2\\microsoft.entityframeworkcore.5.0.2.nupkg.sha512",
-    "C:\\Users\\Nokta Bilgisayar\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\5.0.2\\microsoft.entityframeworkcore.abstractions.5.0.2.nupkg.sha512",
-    "C:\\Users\\Nokta Bilgisayar\\.nuget\\packages\\microsoft.entityframeworkcore.analyzers\\5.0.2\\microsoft.entityframeworkcore.analyzers.5.0.2.nupkg.sha512",
+    "C:\\Users\\Nokta Bilgisayar\\.nuget\\packages\\microsoft.entityframeworkcore\\5.0.4\\microsoft.entityframeworkcore.5.0.4.nupkg.sha512",
+    "C:\\Users\\Nokta Bilgisayar\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\5.0.4\\microsoft.entityframeworkcore.abstractions.5.0.4.nupkg.sha512",
+    "C:\\Users\\Nokta Bilgisayar\\.nuget\\packages\\microsoft.entityframeworkcore.analyzers\\5.0.4\\microsoft.entityframeworkcore.analyzers.5.0.4.nupkg.sha512",
     "C:\\Users\\Nokta Bilgisayar\\.nuget\\packages\\microsoft.extensions.caching.abstractions\\5.0.0\\microsoft.extensions.caching.abstractions.5.0.0.nupkg.sha512",
     "C:\\Users\\Nokta Bilgisayar\\.nuget\\packages\\microsoft.extensions.caching.memory\\5.0.0\\microsoft.extensions.caching.memory.5.0.0.nupkg.sha512",
     "C:\\Users\\Nokta Bilgisayar\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\2.2.0\\microsoft.extensions.configuration.abstractions.2.2.0.nupkg.sha512",

@@ -3169,7 +3169,7 @@
         "framework": ".NETCoreApp,Version=v5.0",
         "dependencies": {
           "Microsoft.AspNetCore.Mvc": "2.2.0",
-          "Microsoft.EntityFrameworkCore": "5.0.2"
+          "Microsoft.EntityFrameworkCore": "5.0.4"
         },
         "compile": {
           "bin/placeholder/ProgrammersBlog.Shared.dll": {}

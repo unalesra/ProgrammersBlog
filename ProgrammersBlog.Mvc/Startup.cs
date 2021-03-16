@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using ProgrammersBlog.Mvc.AutoMapper.Profiles;
 using ProgrammersBlog.Services.AutoMapper.Profiles;
 using ProgrammersBlog.Services.Extensions;
 using System;
@@ -33,7 +34,7 @@ namespace ProgrammersBlog.Mvc
             services.AddSession();
 
             //derlenme esnasýnda automapper'in burada olan sýnýflarý taramasýný saðlýyoruz.
-            services.AddAutoMapper(typeof(CategoryProfile), typeof(ArticleProfile));
+            services.AddAutoMapper(typeof(CategoryProfile), typeof(ArticleProfile), typeof(UserProfile));
 
             //servis katmaný ile mvc katmaný arasýnaki baðlantý
             services.LoadMyService();
