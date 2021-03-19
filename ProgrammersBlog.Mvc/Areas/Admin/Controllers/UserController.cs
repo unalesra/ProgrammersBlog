@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -13,6 +14,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace ProgrammersBlog.Mvc.Areas.Admin.Controllers
@@ -44,7 +46,20 @@ namespace ProgrammersBlog.Mvc.Areas.Admin.Controllers
                 ResultStatus=ResultStatus.Success
             });
         }
-
+        [HttpGet]
+        public async Task<JsonResult> GetAllUsers()
+        {
+            var users = await _userManager.Users.ToListAsync();
+            var userListDto = JsonSerializer.Serialize(new UserListDto
+            {
+                Users = users,
+                ResultStatus = ResultStatus.Success
+            }, new JsonSerializerOptions
+            {
+                ReferenceHandler = ReferenceHandler.Preserve
+            });
+            return Json(userListDto);
+        }
         [HttpGet]
         public IActionResult Add()
         {
@@ -57,9 +72,9 @@ namespace ProgrammersBlog.Mvc.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                userAddDto.Picture = await ImageUpload(userAddDto);
+                userAddDto.Picture = await ImageUpload(userAddDto.UserName, userAddDto.PictureFile);
                 var user = _mapper.Map<User>(userAddDto);
-
+             
                 //şifreyi hashlediği için ayrı olarak alıyor.
                 var result = await _userManager.CreateAsync(user, userAddDto.Password);
 
@@ -105,25 +120,141 @@ namespace ProgrammersBlog.Mvc.Areas.Admin.Controllers
             return Json(userAddAjaxModelStateErrorModel);
         }
 
-        public async Task<String> ImageUpload(UserAddDto userAddDto)
+
+        public async Task<JsonResult> Delete(int userId)
         {
-            string wwwroot = _env.WebRootPath;  //wwwroot'un dosya yolunu dinamik bir şekilde aldım.
-
-            //    string fileName = Path.GetFileNameWithoutExtension(userAddDto.PictureFile.FileName); //sondaki uzantıyı sildik. .png gibi
-            string fileExtension = Path.GetExtension(userAddDto.PictureFile.FileName); //.png'yi aldık
-
-            DateTime dateTime = DateTime.Now;
-            string fileName = $"{userAddDto.UserName}_{dateTime.FullDateAndTimeStringWithUnderscore()}{fileExtension}";
-            var path = Path.Combine($"{wwwroot}/img",fileName);
-
-
-            //Filestream dosyalarla ilgli işlemleri yöneten sınıf
-            await using (var stream= new FileStream(path, FileMode.Create))
+            var user = await _userManager.FindByIdAsync(userId.ToString());
+            var result = await _userManager.DeleteAsync(user);
+            if (result.Succeeded)
             {
-                await userAddDto.PictureFile.CopyToAsync(stream);
+                var deletedUser = JsonSerializer.Serialize(new UserDto
+                {
+                    ResultStatus = ResultStatus.Success,
+                    Message = $"{user.UserName} adlı kullanıcı adına sahip kullanıcı başarıyla silinmiştir.",  //stringî formatlı şekilde yazmak için $"" şeklinde kullanıyoruz.
+                    User = user
+                });
+                return Json(deletedUser);
+            }
+            else
+            {
+                string errorMessages = String.Empty;
+                foreach (var error in result.Errors)
+                {
+                    errorMessages = $"*{error.Description}\n";
+                }
+
+                var deletedUserErrorModel = JsonSerializer.Serialize(new UserDto
+                {
+                    ResultStatus = ResultStatus.Error,
+                    Message =
+                        $"{user.UserName} adlı kullanıcı adına sahip kullanıcı silinirken bazı hatalar oluştu.\n{errorMessages}",
+                    User = user
+                });
+                return Json(deletedUserErrorModel);
+            }
+        }
+
+        public async Task<PartialViewResult> Update(int userId)
+        {
+            var user = await _userManager.Users.FirstOrDefaultAsync(u => u.Id == userId);
+            var userUpdateDto = _mapper.Map<UserUpdateDto>(user);
+            return PartialView("_UserUpdatePartial", userUpdateDto);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Update(UserUpdateDto userUpdateDto)
+        {
+            if (ModelState.IsValid)
+            {
+                bool isNewPictureUploaded = false;
+                var oldUser = await _userManager.FindByIdAsync(userUpdateDto.Id.ToString());
+                var oldUserPicture = oldUser.Picture;
+                if (userUpdateDto.PictureFile != null)
+                {
+                    userUpdateDto.Picture = await ImageUpload(userUpdateDto.UserName, userUpdateDto.PictureFile);
+                    isNewPictureUploaded = true;
+                }
+
+                var updatedUser = _mapper.Map<UserUpdateDto, User>(userUpdateDto, oldUser);
+                var result = await _userManager.UpdateAsync(updatedUser);
+                if (result.Succeeded)
+                {
+                    if (isNewPictureUploaded)
+                    {
+                        ImageDelete(oldUserPicture);
+                    }
+
+                    var userUpdateViewModel = JsonSerializer.Serialize(new UserUpdateAjaxViewModel
+                    {
+                        UserDto = new UserDto
+                        {
+                            ResultStatus = ResultStatus.Success,
+                            Message = $"{updatedUser.UserName} adlı kullanıcı başarıyla güncellenmiştir.",
+                            User = updatedUser
+                        },
+                        UserUpdatePartial = await this.RenderViewToStringAsync("_UserUpdatePartial", userUpdateDto)
+                    });
+                    return Json(userUpdateViewModel);
+                }
+                else
+                {
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError("", error.Description);
+                    }
+                    var userUpdateErorViewModel = JsonSerializer.Serialize(new UserUpdateAjaxViewModel
+                    {
+                        UserUpdateDto = userUpdateDto,
+                        UserUpdatePartial = await this.RenderViewToStringAsync("_UserUpdatePartial", userUpdateDto)
+                    });
+                    return Json(userUpdateErorViewModel);
+                }
+
+            }
+            else
+            {
+                var userUpdateModelStateErrorViewModel = JsonSerializer.Serialize(new UserUpdateAjaxViewModel
+                {
+                    UserUpdateDto = userUpdateDto,
+                    UserUpdatePartial = await this.RenderViewToStringAsync("_UserUpdatePartial", userUpdateDto)
+                });
+                return Json(userUpdateModelStateErrorViewModel);
+            }
+        }
+
+        public async Task<string> ImageUpload(string userName, IFormFile pictureFile)
+        {
+            // ~/img/user.Picture
+            string wwwroot = _env.WebRootPath;
+            // alpertunga     
+            // string fileName2 = Path.GetFileNameWithoutExtension(pictureFile.FileName);
+            //.png
+            string fileExtension = Path.GetExtension(pictureFile.FileName);
+            DateTime dateTime = DateTime.Now;
+            // AlperTunga_587_5_38_12_3_10_2020.png
+            string fileName = $"{userName}_{dateTime.FullDateAndTimeStringWithUnderscore()}{fileExtension}";
+            var path = Path.Combine($"{wwwroot}/img", fileName);
+            await using (var stream = new FileStream(path, FileMode.Create))
+            {
+                await pictureFile.CopyToAsync(stream);
             }
 
-            return fileName;
+            return fileName; // AlperTunga_587_5_38_12_3_10_2020.png - "~/img/user.Picture"
+        }
+
+        public bool ImageDelete(string pictureName)
+        {
+            string wwwroot = _env.WebRootPath;
+            var fileToDelete = Path.Combine($"{wwwroot}/img", pictureName);
+            if (System.IO.File.Exists(fileToDelete))
+            {
+                System.IO.File.Delete(fileToDelete);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

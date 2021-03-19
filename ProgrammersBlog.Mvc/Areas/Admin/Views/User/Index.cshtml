@@ -4,7 +4,6 @@
     Layout = "_Layout";
     ViewBag.Title = "Kullanıcılar Index";
 }
-
 @if (Model.ResultStatus == ResultStatus.Success)
 {
     <div id="modalPlaceHolder" aria-hidden="true"></div>
@@ -47,7 +46,7 @@
                                 <td>@user.UserName</td>
                                 <td>@user.Email</td>
                                 <td>@user.PhoneNumber</td>
-                                <td>@user.Picture</td>
+                                <td><img src="~/img/@user.Picture" alt="@user.UserName" class="my-image-table" /></td>
                                 <td>
                                     <button class="btn btn-primary btn-sm btn-update" data-id="@user.Id"><span class="fas fa-edit"></span></button>
                                     <button class="btn btn-danger btn-sm btn-delete" data-id="@user.Id"><span class="fas fa-minus-circle"></span></button>
@@ -67,7 +66,6 @@
         Dashboard sayfasına geri dönmek için lütfen <a class="alert-link" asp-area="Admin" asp-controller="Home" asp-action="Index">tıklayınız.</a>
     </div>
 }
-
 @section Scripts
 {
     <script src="~/js/userIndex.js" type="application/ecmascript"></script>
