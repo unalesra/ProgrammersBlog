@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -20,6 +21,8 @@ using System.Threading.Tasks;
 namespace ProgrammersBlog.Mvc.Areas.Admin.Controllers
 {
     [Area("Admin")]
+
+    //login için buraya  [Authorize] ekleyemiyorum çünkü login de burada yazılı. Bu yüzden actionların üzerine tek tek ekledik.
     public class UserController : Controller
     {
 
@@ -31,12 +34,18 @@ namespace ProgrammersBlog.Mvc.Areas.Admin.Controllers
 
         private readonly IMapper _mapper;
 
-        public UserController(UserManager<User> userManager, IWebHostEnvironment env, IMapper mapper)
+        //login işlemleri için kullanıyoruz.
+        private readonly SignInManager<User> _signInManager;
+
+
+        public UserController(UserManager<User> userManager, IWebHostEnvironment env, IMapper mapper, SignInManager<User> signInManager)
         {
             _userManager = userManager;
             _env = env;
             _mapper = mapper;
+            _signInManager = signInManager;
         }
+        [Authorize]
         public async Task<IActionResult> Index()
         {
             var users = await _userManager.Users.ToListAsync();
@@ -51,7 +60,41 @@ namespace ProgrammersBlog.Mvc.Areas.Admin.Controllers
         {
             return View("UserLogin");
         }
+
+        [HttpPost]
+        public async Task<IActionResult> Login(UserLoginDto userLoginDto)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await _userManager.FindByEmailAsync(userLoginDto.Email);
+                if (user != null)
+                {
+                    var result = await _signInManager.PasswordSignInAsync(user, userLoginDto.Password,
+                        userLoginDto.RememberMe, false);
+                    if (result.Succeeded)
+                    {
+                        return RedirectToAction("Index", "Home");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "E-posta adresiniz veya şifreniz yanlıştır.");
+                        return View("UserLogin");
+                    }
+                }
+                else
+                {
+                    ModelState.AddModelError("", "E-posta adresiniz veya şifreniz yanlıştır.");
+                    return View("UserLogin");
+                }
+            }
+            else
+            {
+                return View("UserLogin");
+            }
+
+        }
         [HttpGet]
+        [Authorize]
         public async Task<JsonResult> GetAllUsers()
         {
             var users = await _userManager.Users.ToListAsync();
@@ -66,6 +109,7 @@ namespace ProgrammersBlog.Mvc.Areas.Admin.Controllers
             return Json(userListDto);
         }
         [HttpGet]
+        [Authorize]
         public IActionResult Add()
         {
             return PartialView("_UserAddPartial");
@@ -73,6 +117,7 @@ namespace ProgrammersBlog.Mvc.Areas.Admin.Controllers
 
 
         [HttpPost]
+            [Authorize]
         public async Task<IActionResult> Add(UserAddDto userAddDto)
         {
             if (ModelState.IsValid)
@@ -125,7 +170,7 @@ namespace ProgrammersBlog.Mvc.Areas.Admin.Controllers
             return Json(userAddAjaxModelStateErrorModel);
         }
 
-
+        [Authorize]
         public async Task<JsonResult> Delete(int userId)
         {
             var user = await _userManager.FindByIdAsync(userId.ToString());
@@ -158,7 +203,7 @@ namespace ProgrammersBlog.Mvc.Areas.Admin.Controllers
                 return Json(deletedUserErrorModel);
             }
         }
-
+        [Authorize]
         public async Task<PartialViewResult> Update(int userId)
         {
             var user = await _userManager.Users.FirstOrDefaultAsync(u => u.Id == userId);
@@ -167,6 +212,7 @@ namespace ProgrammersBlog.Mvc.Areas.Admin.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Update(UserUpdateDto userUpdateDto)
         {
             if (ModelState.IsValid)
@@ -226,7 +272,7 @@ namespace ProgrammersBlog.Mvc.Areas.Admin.Controllers
                 return Json(userUpdateModelStateErrorViewModel);
             }
         }
-
+        [Authorize]
         public async Task<string> ImageUpload(string userName, IFormFile pictureFile)
         {
             // ~/img/user.Picture
@@ -246,7 +292,7 @@ namespace ProgrammersBlog.Mvc.Areas.Admin.Controllers
 
             return fileName; // AlperTunga_587_5_38_12_3_10_2020.png - "~/img/user.Picture"
         }
-
+        [Authorize]
         public bool ImageDelete(string pictureName)
         {
             string wwwroot = _env.WebRootPath;

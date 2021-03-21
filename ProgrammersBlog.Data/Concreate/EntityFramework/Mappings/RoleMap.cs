@@ -11,37 +11,49 @@ namespace ProgrammersBlog.Data.Concreate.EntityFramework.Mappings
 {
     public class RoleMap:IEntityTypeConfiguration<Role>
     {
-        public void Configure(EntityTypeBuilder<Role> b)
+        //https://docs.microsoft.com/en-us/aspnet/core/security/authentication/customize-identity-model?view=aspnetcore-5.0
+        public void Configure(EntityTypeBuilder<Role> builder)
         {
-
-            //https://docs.microsoft.com/en-us/aspnet/core/security/authentication/customize-identity-model?view=aspnetcore-5.0
-
             // Primary key
-            b.HasKey(r => r.Id);
+            builder.HasKey(r => r.Id);
 
             // Index for "normalized" role name to allow efficient lookups
-            b.HasIndex(r => r.NormalizedName).HasDatabaseName("RoleNameIndex").IsUnique();
+            builder.HasIndex(r => r.NormalizedName).HasDatabaseName("RoleNameIndex").IsUnique();
 
             // Maps to the AspNetRoles table
-            b.ToTable("AspNetRoles");
+            builder.ToTable("AspNetRoles");
 
             // A concurrency token for use with the optimistic concurrency checking
-            //farklı kullanıcıların aynı anda aynı kayıdın değiştirilmesinin önüne geçmek için kullanılıyor.
-            b.Property(r => r.ConcurrencyStamp).IsConcurrencyToken();
+            builder.Property(r => r.ConcurrencyStamp).IsConcurrencyToken();
 
             // Limit the size of columns to use efficient database types
-            b.Property(u => u.Name).HasMaxLength(100);
-            //normalize kısmı büyük harflere çevrilip indekslendiği kısım
-            b.Property(u => u.NormalizedName).HasMaxLength(100);
+            builder.Property(u => u.Name).HasMaxLength(100);
+            builder.Property(u => u.NormalizedName).HasMaxLength(100);
 
             // The relationships between Role and other entity types
             // Note that these relationships are configured with no navigation properties
 
             // Each Role can have many entries in the UserRole join table
-            b.HasMany<UserRole>().WithOne().HasForeignKey(ur => ur.RoleId).IsRequired();
+            builder.HasMany<UserRole>().WithOne().HasForeignKey(ur => ur.RoleId).IsRequired();
 
             // Each Role can have many associated RoleClaims
-            b.HasMany<RoleClaim>().WithOne().HasForeignKey(rc => rc.RoleId).IsRequired();
+            builder.HasMany<RoleClaim>().WithOne().HasForeignKey(rc => rc.RoleId).IsRequired();
+
+            builder.HasData(
+                new Role
+                {
+                    Id = 1,
+                    Name = "Admin",
+                    NormalizedName = "ADMIN",
+                    ConcurrencyStamp = Guid.NewGuid().ToString() //bu field bir admin giriş yapmışken, başkası da giriş yaparsa aynı kullanıcı üzerinde aynı anda değişiklik yapmasını önlemek için
+                },
+                new Role
+                {
+                    Id = 2,
+                    Name = "Editor",
+                    NormalizedName = "EDITOR",
+                    ConcurrencyStamp = Guid.NewGuid().ToString()
+                });
         }
     }
 }

@@ -11,13 +11,26 @@ namespace ProgrammersBlog.Data.Concreate.EntityFramework.Mappings
 {
     public class UserRoleMap : IEntityTypeConfiguration<UserRole>
     {
-        public void Configure(EntityTypeBuilder<UserRole> b)
+        public void Configure(EntityTypeBuilder<UserRole> builder)
         {
             // Primary key
-            b.HasKey(r => new { r.UserId, r.RoleId });
+            builder.HasKey(r => new { r.UserId, r.RoleId });
 
             // Maps to the AspNetUserRoles table
-            b.ToTable("AspNetUserRoles");
+            builder.ToTable("AspNetUserRoles");
+
+            builder.HasData(
+                new UserRole
+                {
+                    RoleId = 1,
+                    UserId = 1
+                },
+                new UserRole
+                {
+                    RoleId = 2,
+                    UserId = 2
+                }
+            );
         }
     }
 }
