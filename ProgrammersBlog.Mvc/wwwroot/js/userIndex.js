@@ -36,17 +36,19 @@
                             if (userListDto.ResultStatus === 0) {
                                 $.each(userListDto.Users.$values,
                                     function (index, user) {
-                                        dataTable.row.add([
+                                        const newTableRow = dataTable.row.add([
                                             user.Id,
                                             user.UserName,
                                             user.Email,
                                             user.PhoneNumber,
-                                            `<img src="/img/${user.Picture}" alt="${user.UserName}" style="max-height: 50px; max-width: 50px;" />`,
+                                            `<img src="/img/${user.Picture}" alt="${user.UserName}" class="my-image-table" />`,
                                             `
                                 <button class="btn btn-primary btn-sm btn-update" data-id="${user.Id}"><span class="fas fa-edit"></span></button>
                                 <button class="btn btn-danger btn-sm btn-delete" data-id="${user.Id}"><span class="fas fa-minus-circle"></span></button>
                                             `
-                                        ]);
+                                        ]).node();
+                                        const jqueryTableRow = $(newTableRow);
+                                        jqueryTableRow.attr('name', `${user.Id}`);
                                     });
                                 dataTable.draw();
                                 $('.spinner-border').hide();

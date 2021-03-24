@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using ProgrammersBlog.Mvc.AutoMapper.Profiles;
+using ProgrammersBlog.Mvc.Helpers.Abstract;
+using ProgrammersBlog.Mvc.Helpers.Concrete;
 using ProgrammersBlog.Services.AutoMapper.Profiles;
 using ProgrammersBlog.Services.Extensions;
 using System;
@@ -38,6 +40,9 @@ namespace ProgrammersBlog.Mvc
 
             //servis katmaný ile mvc katmaný arasýnaki baðlantý
             services.LoadMyService();
+
+            //servisi kaydetmek
+            services.AddScoped<IImageHelper, ImageHelper>();
 
             //cookie
             services.ConfigureApplicationCookie(options=> {
