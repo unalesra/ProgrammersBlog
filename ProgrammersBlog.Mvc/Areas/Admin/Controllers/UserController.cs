@@ -266,15 +266,15 @@ namespace ProgrammersBlog.Mvc.Areas.Admin.Controllers
                 return Json(deletedUserErrorModel);
             }
         }
+
         [Authorize(Roles = "Admin")]
+        [HttpGet]
         public async Task<PartialViewResult> Update(int userId)
         {
             var user = await _userManager.Users.FirstOrDefaultAsync(u => u.Id == userId);
             var userUpdateDto = _mapper.Map<UserUpdateDto>(user);
             return PartialView("_UserUpdatePartial", userUpdateDto);
         }
-
-
         [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> Update(UserUpdateDto userUpdateDto)
@@ -342,6 +342,8 @@ namespace ProgrammersBlog.Mvc.Areas.Admin.Controllers
                 return Json(userUpdateModelStateErrorViewModel);
             }
         }
+
+
         [Authorize]
         [HttpGet]
         public async Task<ViewResult> ChangeDetails()
