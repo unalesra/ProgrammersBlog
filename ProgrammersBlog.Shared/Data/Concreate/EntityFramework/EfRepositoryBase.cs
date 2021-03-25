@@ -12,7 +12,6 @@ namespace ProgrammersBlog.Shared.Data.Concreate.EntityFramework
 {
     public class EfRepositoryBase<TEntity> : IEntityRepository<TEntity> where TEntity : class, IEntity, new()
     {
-
         private readonly DbContext _context;
 
         public EfRepositoryBase(DbContext context)
