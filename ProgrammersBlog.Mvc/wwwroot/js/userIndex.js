@@ -98,6 +98,7 @@
                 }
             }
         }
+        //"order":[[4, "desc"]] --> 4.sütuna göre azalan sırala
     });
 
     /* DataTables end here */
